@@ -1,9 +1,11 @@
 import React from "react"
-// import { Link } from "react-router-dom";
+//与仓库连接
+import {connect} from 'react-redux';
 class Forms extends React.Component {
 	constructor(props) {
 		super(props);
 		this.props = props;
+		console.log(props)
 		this.state = {
 			cards: []
 		}
@@ -107,4 +109,4 @@ class Forms extends React.Component {
 		)
 	}
 }
-export default Forms;
+export default connect()(Forms);

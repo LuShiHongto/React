@@ -1,4 +1,5 @@
 import React from 'react';
+//虚拟DOM
 import ReactDOM from 'react-dom';
 
 //引入路由
@@ -13,13 +14,27 @@ import './styles/index.css';
 //axios配置
 import axios from 'axios';
 
+//状态管理
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+
 import App from './App';
 import * as serviceWorker from './lib/serviceWorker';
 React.axios = axios;
+
+//创建仓库
+const store = createStore((state = {
+   
+}, action) => {
+   
+})
+
 ReactDOM.render(
-	<Router>
-		<App></App>
-	</Router>
+	<Provider store={store}>
+		<Router>
+			<App></App>
+		</Router>
+	</Provider>
 , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

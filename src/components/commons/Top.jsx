@@ -83,10 +83,8 @@ class Top extends React.Component {
 																return (
 																	<li onClick={this.navigateTo.bind(this,index)} key={index} 
 																	className={index===this.state.nav?"item_li cur":"item_li"
-																	}><span><Link to={item.href}>
-																	
-																			{item.title}
-																			<em ></em></Link></span>
+																	}><span><Link to={ {pathname: item.href}}  replace>
+																		{item.title}<em ></em></Link></span>
 																	</li>
 																)
 															})
