@@ -5,7 +5,7 @@ class Forms extends React.Component {
 	constructor(props) {
 		super(props);
 		this.props = props;
-		console.log(props)
+		// console.log(props)
 		this.state = {
 			cards: []
 		}
@@ -109,4 +109,13 @@ class Forms extends React.Component {
 		)
 	}
 }
-export default connect()(Forms);
+//connet的第一个函数式获取store里面的值返回给组件	（拿）
+//第二个函数是定义一个方法给自身使用，而这个方法可以出发store里面的action	（该）
+export default connect((state) => {
+	return state
+},(dispatch) => {
+	return {
+		
+	}
+})(Forms);
+// export default Forms;//原始写法

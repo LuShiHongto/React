@@ -104,9 +104,19 @@ git数据请求如使用json之类的数据类型请求而不是从网上扒，�
 
 ```js
 	const store = createStore((state = {
-	   
+	   isShowNav: false,
+	   text:"我最帅"
 	}, action) => {
-	   
+	   switch (action.type){
+		   //修改并传递
+			case 'toggleNav':
+				return {
+					...state,
+					isShowNav:action.isShowNav
+				}
+			default:
+				return state
+	   }
 	})
 ```
 
@@ -131,7 +141,14 @@ git数据请求如使用json之类的数据类型请求而不是从网上扒，�
 
 ```js
 使用：
-	export default connect()(Forms);
+	export default connect((state) => {
+		console.log(state)
+		return state
+	},(dispatch) => {
+		return {
+			
+		}
+	})(组件名);
 ```
 ```js
 	constructor(props) {
@@ -143,6 +160,73 @@ git数据请求如使用json之类的数据类型请求而不是从网上扒，�
 		}
 	}
 ```	
-#### 此时仓库的数据通过props能被找到。
+#### （4）此时仓库的数据通过props能被拿到。
 #### 打印props时得到一个{dispatch:f}方法,就是通过这个dispatch这个方法来建立仓库之间数据互传
+<br>
+##  redux个人总结：redux是创建数据与修改数据后传回仓库的一个过程
 
+###  分为：1.创建数据仓库并传递数据	2.修改数据后传回仓库
+
+### 1.创建数据仓库并传递数据
+#### （1）store的操作
+其中：
+```js
+store函数是创建数据也就是仓库存放数据，并传到关联组件，关联组件通过props拿到仓库的值
+
+	const store = createStore((state = {
+	   isShowNav: false,
+	   text:"我最帅"
+	}
+```
+#### （2）action的操作
+```js
+action函数是接收关联组件的操作进行修改数据，并将数据传回store函数中的仓库
+
+	action) => {
+	   switch (action.type){
+		   //修改并传递
+			case 'toggleNav':
+				return {
+					...state,
+					isShowNav:action.isShowNav
+				}
+			default:
+				return state
+	   }
+	})
+```
+
+### 2.修改数据后传回仓库
+
+#### （1）接收仓库传递的值
+
+```js
+接收传值的方法
+	export default connect((state) => {
+		//获取到仓库的state
+		return state
+	}
+通过props拿到仓库的数据进行操作
+	constructor(props){
+		super(props)
+		this.props = props;
+		console.log(props)
+```
+
+#### （2）修改当前组件的数据并返回给`action`修改函数进行修改
+
+```js
+以下步骤是通过事件函数修改单签仓库的值并返回给action函数
+	(dispatch) => {
+		//用dispatch触发仓库中的action
+		return {
+			toggleNav(){
+				dispatch({
+					type:"toggleNav",
+					isShowNav:!this.props.isShowNav
+				})
+			}
+		}
+	})(Top);
+
+```

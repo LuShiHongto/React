@@ -1,11 +1,12 @@
 import React from "react"
 import { Link } from "react-router-dom";
+import {connect} from 'react-redux';
 class Top extends React.Component {
 	constructor(props){
-		super(props)
+		super(props)//props是继承到爸爸的数据
 		this.props = props;
-		console.log(props)
-		this.state = {
+		// console.log(props)
+		this.state = {//这是靠自己或者后端axios拿到的数据属于自己
 			nav:0,
 			navs:[{
 				title:"热门",
@@ -96,11 +97,26 @@ class Top extends React.Component {
 
 
 							</div>
-							<div className="nav-plus m-box-center m-box-center-a"><i className="m-font m-font-arrow-down"></i></div>
+							<div onClick={
+								this.props.toggleNav.bind(this)
+							} className="nav-plus m-box-center m-box-center-a"><i className="m-font m-font-arrow-down"></i></div>
 					</div>
 			</div>
 	</div>
 		)
 	}						
 }
-export default Top;
+export default connect((state) => {
+	//获取到仓库的state
+	return state
+},(dispatch) => {
+	//用dispatch触发仓库中的action
+	return {
+		toggleNav(){
+			dispatch({
+				type:"toggleNav",
+				isShowNav:!this.props.isShowNav
+			})
+		}
+	}
+})(Top);
